@@ -5,8 +5,9 @@
         <attr name="dv_draw_tool" format="enum">
             <enum name="pen" value="0"/>
             <enum name="line" value="1"/>
-            <enum name="rectangle" value="2"/>
-            <enum name="circle" value="3"/>
+            <enum name="arrow" value="2"/>
+            <enum name="rectangle" value="3"/>
+            <enum name="circle" value="4"/>
         </attr>
         <attr name="dv_draw_mode" format="enum">
             <enum name="draw" value="0"/>
