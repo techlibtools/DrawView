@@ -45,7 +45,7 @@ publishing {
             artifactId = 'com-techlibtools-drawview'
             version = '1.1'
             pom {
-                description = 'First release'
+                description = 'Second release'
             }
         }
     }
