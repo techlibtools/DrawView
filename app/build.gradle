@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 2
-        versionName "1.4"
+        versionCode 5
+        versionName "1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -43,9 +43,9 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.github.techlibtools'
             artifactId = 'com-techlibtools-drawview'
-            version = '1.4'
+            version = '1.5'
             pom {
-                description = 'forth release'
+                description = 'fifth release'
             }
         }
     }

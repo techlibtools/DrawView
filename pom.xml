@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.techlibtools</groupId>
     <artifactId>com-techlibtools-drawview</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <packaging>pom</packaging>
-    <description>forth version release</description>
+    <description>fifth version release</description>
 </project>
