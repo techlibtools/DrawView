@@ -1,7 +1,7 @@
 jdk:
   - openjdk17
 before_install:
-  - - echo "Cleaning previous build..."
+  - echo "Cleaning previous build..."
   - ./gradlew clean
 install:
   - echo "Building AAR file..."
