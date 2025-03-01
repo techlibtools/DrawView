@@ -5,5 +5,5 @@ before_install:
   - ./gradlew clean
 install:
   - ./gradlew assembleRelease
-  - FILE="-Dfile=build/outputs/aar/app-release.aar"
+  - FILE="-Dfile=outputs/aar/app-release.aar"
   - mvn install:install-file $FILE -DgroupId=com.github.techlibtools -DartifactId=com-techlibtools-drawview -Dversion=1.5 -Dpackaging=aar -DgeneratePom=true
