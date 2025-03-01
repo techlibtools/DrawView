@@ -1,6 +1,10 @@
 jdk:
   - openjdk17
+before_install:
+  - - echo "Cleaning previous build..."
+  - ./gradlew clean
 install:
+  - echo "Building AAR file..."
   - ./gradlew assembleRelease
-  - FILE="-Dfile=com-techlibtools-drawview.aar"
-  - mvn install:install-file $FILE -DgroupId=com.github.techlibtools -DartifactId=com-techlibtools-drawview -Dversion=1.1 -Dpackaging=aar -DgeneratePom=true
+  - FILE="-Dfile=build/outputs/aar/app-release.aar"
+  - mvn install:install-file $FILE -DgroupId=com.github.techlibtools -DartifactId=com-techlibtools-drawview -Dversion=1.4 -Dpackaging=aar -DgeneratePom=true
