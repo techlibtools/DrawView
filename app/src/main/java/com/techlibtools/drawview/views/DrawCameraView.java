@@ -11,10 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 
-/**
- * Created by IngMedina on 29/04/2017.
- */
-
 public class DrawCameraView extends FrameLayout {
 
     private CameraView mCameraView;

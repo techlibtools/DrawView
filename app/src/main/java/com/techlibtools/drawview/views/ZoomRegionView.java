@@ -16,10 +16,6 @@ import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-/**
- * Created by IngMedina on 30/03/2017.
- */
-
 public class ZoomRegionView extends androidx.appcompat.widget.AppCompatImageView implements View.OnTouchListener {
 
     // LISTENER

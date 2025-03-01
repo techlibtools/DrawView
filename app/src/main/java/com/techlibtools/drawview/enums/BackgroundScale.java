@@ -1,9 +1,5 @@
 package com.techlibtools.drawview.enums;
 
-/**
- * Created by IngMedina on 29/04/2017.
- */
-
 public enum BackgroundScale {
     CENTER_INSIDE,
     CENTER_CROP,

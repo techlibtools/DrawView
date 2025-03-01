@@ -20,10 +20,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by IngMedina on 29/04/2017.
- */
-
 public class CameraView extends SurfaceView
         implements SurfaceHolder.Callback,
         Camera.PreviewCallback {
@@ -81,8 +77,6 @@ public class CameraView extends SurfaceView
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.i("CAMERA_VIEW", "Changing camera");
-//        mCameraWidth = width;
-//        mCameraHeight = height;
         mCurrentSurface = holder;
         initCamera();
     }
@@ -353,38 +347,6 @@ public class CameraView extends SurfaceView
         else
             return out.toByteArray();
     }
-
-    /*public Object getCameraFrame(DrawingCapture drawingCapture) {
-        Object capturedFrame = null;
-        try {
-            Camera.Parameters p = mCamera.getParameters();
-            if (p == null)
-                return null;
-
-            int format = p.getPreviewFormat();
-            YuvImage yuvImage = new YuvImage(byteArray, format, p.getPreviewSize().width, p.getPreviewSize().height, null);
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-            Rect rect = new Rect(0, 0, p.getPreviewSize().width, p.getPreviewSize().height);
-
-            yuvImage.compressToJpeg(rect, 75, byteArrayOutputStream);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPurgeable = true;
-            options.inInputShareable = true;
-
-            if (drawingCapture == DrawingCapture.BITMAP)
-                capturedFrame = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size(), options);
-            else
-                capturedFrame = byteArrayOutputStream.toByteArray();
-
-            byteArrayOutputStream.flush();
-            byteArrayOutputStream.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-
-        return capturedFrame;
-    }*/
 
     public void setOnCameraViewListener(OnCameraViewListener onCameraViewListener) {
         mListener = onCameraViewListener;

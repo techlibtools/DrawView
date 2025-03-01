@@ -9,15 +9,6 @@ import com.techlibtools.drawview.utils.SerializablePath;
 
 import java.io.Serializable;
 
-/**
- * Created by Ing. Oscar G. Medina Cruz on 07/11/2016.
- * <p>
- * Dictionary class that save move for draw in the view, this allow the user to make a history
- * of the user movements in the view and make a redo/undo.
- *
- * @author Ing. Oscar G. Medina Cruz
- */
-
 public class DrawMove implements Serializable {
 
     private static DrawMove mSingleton;
@@ -25,7 +16,6 @@ public class DrawMove implements Serializable {
     private SerializablePaint mPaint;
     private DrawingMode mDrawingMode = null;
     private DrawingTool mDrawingTool = null;
-    //private List<SerializablePath> mDrawingPathList;
     private SerializablePath mDrawingPath;
     private float mStartX, mStartY, mEndX, mEndY;
     private String mText;

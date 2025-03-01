@@ -3,10 +3,6 @@ package com.techlibtools.drawview.utils;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 
-/**
- * Created by IngMedina on 29/04/2017.
- */
-
 public class MatrixUtils {
     public static Matrix GetCenterCropMatrix(RectF srcSize, RectF destSize){
         Matrix matrix = new Matrix();

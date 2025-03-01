@@ -2,10 +2,6 @@ package com.techlibtools.drawview.utils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Created by IngMedina on 30/04/2017.
- */
-
 public class ViewUtils {
 
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);

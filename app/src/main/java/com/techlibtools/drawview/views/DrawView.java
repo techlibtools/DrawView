@@ -57,17 +57,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ing. Oscar G. Medina Cruz on 06/11/2016.
- * <p>
- * This view was created for draw or paint anything you want.
- * <p>
- * <p>
- * This view can be configurated for change draw color, width size, can use tools like pen, line, circle, square.
- * </p>
- *
- * @author Ing. Oscar G. Medina Cruz
- */
 public class DrawView extends FrameLayout implements View.OnTouchListener {
 
     // CONSTANTS
@@ -91,7 +80,6 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
     private Typeface mFontFamily;
     private float mFontSize;
     private int mBackgroundColor = -1;
-    //private Object mBackgroundImage;
     private Bitmap mBackgroundImageBitmap;
     private Rect mCanvasClipBounds;
 
@@ -114,8 +102,8 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
     private DrawingTool mDrawingTool;
     private DrawingOrientation mInitialDrawingOrientation;
 
-    private List<DrawMove> mDrawMoveHistory;// 路径记录
-    private int mDrawMoveHistoryIndex = -1;// 历史路径index
+    private List<DrawMove> mDrawMoveHistory;//
+    private int mDrawMoveHistoryIndex = -1;//
     private int mDrawMoveBackgroundIndex = -1;// background index
 
     private RectF mAuxRect;
@@ -128,7 +116,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
     private CardView mZoomRegionCardView;
     private ZoomRegionView mZoomRegionView;
 
-    private boolean historySwitch = true;// true 开启绘制历史；false 关闭
+    private boolean historySwitch = true;// true ；false
 
     /**
      * Default constructor
@@ -173,7 +161,6 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
      * @param defStyleAttr
      * @param defStyleRes
      */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public DrawView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initVars();
@@ -197,7 +184,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
         // Draw canvas background
         mContentCanvas.drawRect(0, 0, mContentBitmap.getWidth(), mContentBitmap.getHeight(), mBackgroundPaint);
 
-        if (mDrawMoveBackgroundIndex != -1 && mDrawMoveHistory != null && mDrawMoveHistory.size() > 0) {
+        if (mDrawMoveBackgroundIndex != -1 && mDrawMoveHistory != null && !mDrawMoveHistory.isEmpty()) {
             DrawMove drawMove = mDrawMoveHistory.get(mDrawMoveBackgroundIndex);
             drawBackgroundImage(drawMove, mContentCanvas);
         }
@@ -258,8 +245,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
                         }
                         break;
                     case TEXT:
-                        if (drawMove.getText() != null && !drawMove.getText().equals("")) {
-                            //mContentCanvas.drawText(drawMove.getText(), drawMove.getEndX(), drawMove.getEndY(), drawMove.getPaint());
+                        if (drawMove.getText() != null && !drawMove.getText().isEmpty()) {
                             drawText(drawMove.getText(),drawMove.getEndY(),drawMove.getPaint());
                         }
                         break;
@@ -333,10 +319,6 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
                             .setDrawingMode(mDrawingMode).setDrawingTool(mDrawingTool));
                     lastMoveIndex = mDrawMoveHistory.size() - 1;
 
-//                    Paint currentPaint = mDrawMoveHistory.get(mDrawMoveHistory.size() - 1).getPaint();
-//                    currentPaint.setStrokeWidth(currentPaint.getStrokeWidth() / mZoomFactor);
-//                    mDrawMoveHistory.get(mDrawMoveHistory.size() - 1).setPaint(currentPaint);
-
                     mDrawMoveHistoryIndex++;
 
                     if (mDrawingTool == DrawingTool.PEN || mDrawingMode == DrawingMode.ERASER) {
@@ -354,7 +336,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
 
                         lastMoveIndex = mDrawMoveHistory.size() - 1;
 
-                        if (mDrawMoveHistory.size() > 0) {
+                        if (!mDrawMoveHistory.isEmpty()) {
                             mDrawMoveHistory.get(lastMoveIndex).setEndX(touchX).setEndY(touchY);
 
                             if (mDrawingTool == DrawingTool.PEN || mDrawingMode == DrawingMode.ERASER) {
@@ -372,14 +354,14 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
                     lastMoveIndex = mDrawMoveHistory.size() - 1;
 
                     if (mLastTouchEvent == MotionEvent.ACTION_DOWN) {
-                        if (mDrawMoveHistory.size() > 0 && getDrawingMode()!=DrawingMode.TEXT) {
+                        if (!mDrawMoveHistory.isEmpty() && getDrawingMode()!=DrawingMode.TEXT) {
                             mDrawMoveHistory.remove(lastMoveIndex);
                             mDrawMoveHistoryIndex--;
                             lastMoveIndex--;
                         }
                     } else if (mLastTouchEvent == MotionEvent.ACTION_MOVE) {
                         mLastTouchEvent = -1;
-                        if (mDrawMoveHistory.size() > 0) {
+                        if (!mDrawMoveHistory.isEmpty()) {
                             mDrawMoveHistory.get(lastMoveIndex).setEndX(touchX).setEndY(touchY);
 
                             if (mDrawingTool == DrawingTool.PEN || mDrawingMode == DrawingMode.ERASER) {
@@ -407,7 +389,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
             mLastTouchEvent = -1;
         }
 
-        if (mDrawMoveHistory.size() > 0) {
+        if (!mDrawMoveHistory.isEmpty()) {
             mInvalidateRect = new Rect(
                     (int) (touchX - (mDrawMoveHistory.get(lastMoveIndex).getPaint().getStrokeWidth() * 2)),
                     (int) (touchY - (mDrawMoveHistory.get(lastMoveIndex).getPaint().getStrokeWidth() * 2)),
@@ -501,16 +483,10 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
                 new ViewTreeObserver.OnGlobalLayoutListener() {
 
                     @SuppressLint("NewApi")
-                    @SuppressWarnings("deprecation")
                     @Override
                     public void onGlobalLayout() {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                            getViewTreeObserver()
-                                    .removeGlobalOnLayoutListener(this);
-                        } else {
-                            getViewTreeObserver()
-                                    .removeOnGlobalLayoutListener(this);
-                        }
+                        getViewTreeObserver()
+                                .removeOnGlobalLayoutListener(this);
                         initZoomRegionView();
                     }
                 });
@@ -672,7 +648,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
      */
     public SerializablePaint getCurrentPaintParams() {
         SerializablePaint currentPaint;
-        if (mDrawMoveHistory.size() > 0 && mDrawMoveHistoryIndex >= 0) {
+        if (!mDrawMoveHistory.isEmpty() && mDrawMoveHistoryIndex >= 0) {
             currentPaint = new SerializablePaint();
             currentPaint.setColor(
                     mDrawMoveHistory.get(mDrawMoveHistoryIndex).getPaint().getColor());
@@ -727,9 +703,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
         return false;
     }
 
-    /**
-     * 清空绘制记录，不清空背景图片
-     */
+
     public boolean clearHistory() {
         if (mDrawMoveHistory != null) {
             if (mDrawMoveBackgroundIndex != -1) {
@@ -745,28 +719,17 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
                 mDrawMoveBackgroundIndex = -1;
                 invalidate();
             }
-//            if (onDrawViewListener != null)
-//                onDrawViewListener.onClearDrawing();
             return true;
         }
         invalidate();
         return false;
     }
 
-    /**
-     * 绘制记录历史开关
-     *
-     * @param historySwitch true
-     */
+
     public void setHistorySwitch(boolean historySwitch) {
         this.historySwitch = historySwitch;
     }
 
-    /**
-     * 返回绘制历史记录状态
-     *
-     * @return
-     */
     public boolean getHistorySwitch() {
         return this.historySwitch;
     }
@@ -778,7 +741,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
      */
     public boolean undo() {
         if (mDrawMoveHistoryIndex > -1 &&
-                mDrawMoveHistory.size() > 0) {
+                !mDrawMoveHistory.isEmpty()) {
             mDrawMoveHistoryIndex--;
 
             mDrawMoveBackgroundIndex = -1;
@@ -933,10 +896,10 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
     }
 
     /**
-     * Delete las history element, this can help for cancel the text request.
+     * Delete last history element, this can help for cancel the text request.
      */
     public void cancelTextRequest() {
-        if (mDrawMoveHistory != null && mDrawMoveHistory.size() > 0) {
+        if (mDrawMoveHistory != null && !mDrawMoveHistory.isEmpty()) {
             mDrawMoveHistory.remove(mDrawMoveHistory.size() - 1);
             mDrawMoveHistoryIndex--;
         }
@@ -967,10 +930,6 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
         return mBackgroundColor;
     }
 
-//    public Object getBackgroundImage() {
-//        return mBackgroundImage;
-//    }
-
     public SerializablePaint.Style getPaintStyle() {
         return mPaintStyle;
     }
@@ -1000,7 +959,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
     }
 
     public boolean isDrawViewEmpty() {
-        return mDrawMoveHistory == null || mDrawMoveHistory.size() == 0;
+        return mDrawMoveHistory == null || mDrawMoveHistory.isEmpty();
     }
 
     public boolean isForCamera() {
@@ -1310,55 +1269,6 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
     }
 
     /**
-     * Set the background image for the DrawView. This image can be a File, Bitmap or ByteArray
-     *
-     * @param backgroundImage  File that contains the background image
-     * @param backgroundType   Background image type (File, Bitmap or ByteArray)
-     * @param backgroundMatrix Background matrix for the image
-     * @return this instance of the view
-     */
-    /*public DrawView setBackgroundImage(@NonNull Object backgroundImage,
-                                       @NonNull BackgroundType backgroundType,
-                                       @NonNull Matrix backgroundMatrix) {
-        if (!(backgroundImage instanceof File) && !(backgroundImage instanceof Bitmap) &&
-                !(backgroundImage instanceof byte[])) {
-            throw new RuntimeException("Background image must be File, Bitmap or ByteArray");
-        }
-
-        if (isForCamera) {
-            Log.i(TAG, "You can't set a background image if your draw view is for camera");
-            return this;
-        }
-
-        if (onDrawViewListener != null)
-            onDrawViewListener.onStartDrawing();
-
-        if (mDrawMoveHistoryIndex >= -1 &&
-                mDrawMoveHistoryIndex < mDrawMoveHistory.size() - 1)
-            mDrawMoveHistory = mDrawMoveHistory.subList(0, mDrawMoveHistoryIndex + 1);
-
-        Bitmap bitmap = BitmapUtils.GetBitmapForDrawView(this, backgroundImage, backgroundType, 50);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] bitmapArray = byteArrayOutputStream.toByteArray();
-        bitmap.recycle();
-
-        mDrawMoveHistory.add(DrawMove.newInstance()
-                .setBackgroundImage(bitmapArray, backgroundMatrix)
-                .setPaint(new SerializablePaint()));
-        mDrawMoveHistoryIndex++;
-
-        mDrawMoveBackgroundIndex = mDrawMoveHistoryIndex;
-
-        if (onDrawViewListener != null)
-            onDrawViewListener.onEndDrawing();
-
-        invalidate();
-
-        return this;
-    }*/
-
-    /**
      * Set the max zoom factor of the DrawView
      *
      * @param maxZoomFactor The max zoom factor target
@@ -1471,7 +1381,7 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
                 mFromZoomRegion = false;
                 mZoomFactor *= detector.getScaleFactor();
                 mZoomFactor = Math.max(1f, Math.min(mZoomFactor, mMaxZoomFactor));
-                mZoomFactor = mZoomFactor > mMaxZoomFactor ? mMaxZoomFactor : mZoomFactor < 1f ? 1f : mZoomFactor;
+                mZoomFactor = mZoomFactor > mMaxZoomFactor ? mMaxZoomFactor : Math.max(mZoomFactor, 1f);
                 mZoomCenterX = detector.getFocusX() / mZoomFactor + mCanvasClipBounds.left;
                 mZoomCenterY = detector.getFocusY() / mZoomFactor + mCanvasClipBounds.top;
 
@@ -1515,7 +1425,6 @@ public class DrawView extends FrameLayout implements View.OnTouchListener {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
                             mZoomFactor = (float) animation.getAnimatedValue();
-//                            Log.i(TAG, "Current Zoom: " + mZoomFactor);
                             mZoomFactor = mZoomFactor < 1f ? 1 : mZoomFactor;
                             mZoomCenterX = e.getX() / mZoomFactor + mCanvasClipBounds.left;
                             mZoomCenterY = e.getY() / mZoomFactor + mCanvasClipBounds.top;

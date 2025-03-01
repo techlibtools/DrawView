@@ -17,10 +17,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by IngMedina on 28/03/2017.
- */
-
 public class BitmapUtils {
 
     private static int ivWidth,ivHeight,newWidth,newHeight;
@@ -125,13 +121,6 @@ public class BitmapUtils {
                 bmp = BitmapFactory.decodeByteArray((byte[]) image, 0, ((byte[]) image).length);
                 break;
         }
-        /*try {
-//          load the bitmap from its path
-            bmp = BitmapFactory.decodeFile(image.getAbsolutePath(), options);
-        } catch (OutOfMemoryError exception) {
-            exception.printStackTrace();
-
-        }*/
         try {
             scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
         } catch (OutOfMemoryError exception) {
@@ -179,29 +168,13 @@ public class BitmapUtils {
             e.printStackTrace();
         }
 
-//        try {
-//            returnFile = File.createTempFile("temp", "." + (
-//                    image.getAbsolutePath().toLowerCase().endsWith("jpg") ? "jpg" : "png"));
-//            FileOutputStream out = null;
-//            String filename = returnFile.getAbsolutePath();
         ByteArrayOutputStream stream = null;
-//            try {
-//                out = new FileOutputStream(filename);
         stream = new ByteArrayOutputStream();
 
 //          write the compressed bitmap at the destination specified by filename.
         scaledBitmap.compress(Bitmap.CompressFormat.PNG, compressQuality, stream);
         bmp.recycle();
-
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         return stream.toByteArray();
-
     }
 
     public static int CalculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
